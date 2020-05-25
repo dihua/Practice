@@ -1,5 +1,5 @@
 /**
- * @author wd
+ * @author wdhua
  */
 class Solution2TwoAdd {
 
