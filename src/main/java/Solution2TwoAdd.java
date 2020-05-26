@@ -1,5 +1,7 @@
 /**
- * @author wdhua
+ * @author dihua.wu
+ * @description 两数相加
+ * @create 2020/5/26
  */
 class Solution2TwoAdd {
 
@@ -29,12 +31,10 @@ class Solution2TwoAdd {
      * 链接：https://leetcode-cn.com/problems/add-two-numbers
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
-     * @param l1
-     * @param l2
-     * @return
+     * @param l1 链表1
+     * @param l2 链表2
+     * @return ListNode
      */
-
-
 
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         //进位
