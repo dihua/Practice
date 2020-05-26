@@ -1,3 +1,5 @@
+import java.util.*;
+
 /**
  * @author dihua.wu
  * @description 无重复字符的最长子串
@@ -32,12 +34,25 @@ public class Solution3LongestSubstringNoRepeat {
      */
 
 
-    public int lengthOfLongestSubstring(String s) {
-
-        return 0;
+    public static int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>(s.length());
+        //子串左边界
+        int left = 0;
+        //子串最大长度
+        int max = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (map.containsKey(c)) {
+                left = Math.max(left, map.get(c) + 1);
+            }
+            map.put(c, i);
+            //i-left+1 子串长度
+            max = Math.max(max, i - left + 1);
+        }
+        return max;
     }
 
     public static void main(String[] args) {
-
+        System.out.println(lengthOfLongestSubstring("dvdf"));
     }
 }
