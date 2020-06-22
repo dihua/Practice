@@ -27,6 +27,19 @@ public class Solution1TwoSum {
      * 链接：https://leetcode-cn.com/problems/two-sum
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
+     *
+     *
+     *
+     * 思路：
+     * 1循环
+     * 2用target-nums[i]=result
+     * 3判断result 是不是在数组中
+     * 4可以把nums[i]放到map中，<nums[i],i>  i是位置
+     * 5有，返回result的位置
+     *
+     *
+     *
+     *
      * @param nums 数组
      * @param target 目标数字
      * @return int[]

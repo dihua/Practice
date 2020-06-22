@@ -33,11 +33,13 @@ public class Solution4MedianTwoSortedArrays {
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      *
      *
-     * @param nums1
-     * @param nums2
-     * @return
+     * @param nums1 数组1
+     * @param nums2 数组2
+     * @return double
      */
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+
         return 0;
     }
 
