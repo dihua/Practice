@@ -35,6 +35,20 @@ public class Solution15ThreeSum {
      *
      * 思路：
      * 排序 双指针
+     *
+     * 先排序
+     * i 数组nums初始位置0
+     * left=i+1
+     * right=length-1
+     * sum = num[i]+num[left]+num[right]
+     * for(i=0 i++)
+     *  if(sum < 0) left ++
+     *      if(left==right) break
+     *      if(sum>0) break
+     *  if(sum > 0) right --
+     *
+     *
+     *
      */
 
 
