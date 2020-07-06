@@ -1,3 +1,5 @@
+package classical;
+
 /**
  * @author dihua.wu
  * @description 二分查找

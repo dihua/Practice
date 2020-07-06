@@ -40,5 +40,5 @@ hs_err_pid*
 .idea/
 LeetCode.iml
 Practice-LeetCode.iml
-src/test/
+src/atomicvisibilty/
 !/.gitignore

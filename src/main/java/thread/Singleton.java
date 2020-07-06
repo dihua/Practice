@@ -1,12 +1,14 @@
+package thread;
+
 /**
  * @author dihua.wu
- * @description
+ * @description 单例
  * @create 2020/7/3
  */
 public class Singleton {
 
     /**
-     * 指令重排序问题：
+     * 指令重排序问题
      */
 
     private static Singleton instance;
