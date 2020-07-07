@@ -26,6 +26,21 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
     int threshold;
 
     /**
+     * 负载因子
+     */
+    final float loadFactor;
+
+    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; //  16
+
+    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+    static final int MAXIMUM_CAPACITY = 1 << 30;
+
+    public HashMap() {
+        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+    }
+
+    /**
      * @param key
      * @param value
      * @return
@@ -98,6 +113,38 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
     }
 
     final Node<K,V>[] resize() {
+        Node<K,V>[] oldTab = table;
+        int oldCap = (oldTab == null) ? 0 : oldTab.length;
+        int oldThr = threshold;
+        int newCap = 0;
+        int newThr = 0;
+        if (oldCap > 0) {
+            //说明数组中已经存在元素
+            if (oldCap >= MAXIMUM_CAPACITY) {
+                //大于最大长度
+                threshold = Integer.MAX_VALUE;
+                return oldTab;
+            } else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+                        oldCap >= DEFAULT_INITIAL_CAPACITY) {
+                //oldCap*2 小于最大值1 << 30 并且 大于等于16
+                //扩容2倍
+                newThr = oldCap << 1;
+            }
+        } else if (oldThr > 0) {
+            //在创建map时用的是带参的构造函数，使threshold有初始值
+            newCap = newThr;
+        } else {
+            //oldCap = 0 数据还未创建
+            newCap = DEFAULT_INITIAL_CAPACITY;
+            newThr = (int) (DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+        }
+        if (newThr == 0) {
+            //1 当oldCap > 0 ，数组中已经存在元素，但长度<16
+            //2 oldThr > 0；newCap = newThr; 第一次put
+            float ft = (float)newCap * loadFactor;
+
+            /////
+        }
         Node<K,V>[] newTab = new Node[0];
         return newTab;
     }
