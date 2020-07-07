@@ -1,4 +1,4 @@
-package jdk8_src;
+package jdk8src;
 
 /**
  * @author dihua.wu
@@ -8,7 +8,7 @@ package jdk8_src;
 public abstract class AbstractMap<K, V> implements Map<K, V> {
 
     @Override
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         return null;
     }
 }

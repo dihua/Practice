@@ -1,4 +1,4 @@
-package jdk8_src;
+package jdk8src;
 
 /**
  * @author dihua.wu
