@@ -18,4 +18,16 @@ public interface Map<K,V> {
      * （返回null也有可能是<null,null>）
      */
     V put(K key, V value);
+
+
+    interface Entry<K,V> {
+        K getKey();
+        V getValue();
+        V setValue(V value);
+
+        boolean equeals(Object o);
+
+        @Override
+        int hashCode();
+    }
 }
