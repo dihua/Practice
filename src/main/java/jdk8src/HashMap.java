@@ -1,15 +1,21 @@
 package jdk8src;
 
-import sun.reflect.generics.tree.Tree;
-
-import javax.swing.tree.TreeNode;
-import java.util.IllegalFormatFlagsException;
 import java.util.Objects;
 
 /**
  * @author dihua.wu
  * @description hashmap 源码
  * @create 2020/7/7
+ *
+ * 线程安全：
+ * 1.hashTable 基本所有方法都采用synchronized进行线程安全
+ * 可想而知，在高并发的情况下，每次只有一个线程能够获取对象监视器锁
+ *  并发性能不好
+ * 2.通过Collections的`Map<K,V> synchronizedMap(Map<K,V> m)`
+ * 将hashmap包装成一个线程安全的map
+ * 依然是采用synchronized独占式锁进行线程安全的并发控制的
+ *  并发性能不好
+ * 3.ConcurrentHashMap 利用锁分段
  */
 public class HashMap<K, V> extends AbstractMap<K, V> {
 
@@ -34,20 +40,28 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
      */
     final float loadFactor;
 
-    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; //  16
+    /**
+     * 默认数据初始化大小
+     * << 左移 4位，前面补0，1000=16
+     */
+    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4;
 
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     static final int MAXIMUM_CAPACITY = 1 << 30;
 
     public HashMap() {
-        this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+        this.loadFactor = DEFAULT_LOAD_FACTOR;
     }
 
     /**
      * @param key
      * @param value
      * @return
+     *
+     * jdk7中，在扩容操作中，链表，用的是头插法，会导致环行链，在jdk8中已经改为尾插法
+     * 【使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%】
+     * jdk8在并发执行put操作时会发生数据覆盖的情况。
      */
     @Override
     public V put(K key, V value) {
@@ -64,6 +78,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
         }
         //计算index = （n-1) & hash，如果没有值，直接添加【* 因为数组长度是2幂次，所以hash &（n-1) = hash % n， &效率更快】
         if ((p = tab[(i = (n-1)) & hash]) == null) {
+            //【***当多线程处理时，A/B同时进行put操作，在70行中，A先执行算出index被挂起***】
+            //【***这时候B也算出新index,B插入成功后，A因为已经算出index了，插入就会覆盖B刚插入的值***】
             tab[i] = new Node<>(hash, key, value, null);
         } else {
             //该index有值，先看tab[i]是不是一样的，再判断是链表还是树
@@ -109,6 +125,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
         ++modCount;
         //判断当前所有键值对节点时候是否大于扩容的域
         //size 键值对数量+1
+        //++size 【***多线程的影响也会导致，A/B同时加1，导致最终只加1，不是2***】
         if (++size > threshold) {
             //扩容
             resize();
