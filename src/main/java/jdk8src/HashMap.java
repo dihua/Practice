@@ -1,5 +1,9 @@
 package jdk8src;
 
+import sun.reflect.generics.tree.Tree;
+
+import javax.swing.tree.TreeNode;
+import java.util.IllegalFormatFlagsException;
 import java.util.Objects;
 
 /**
@@ -58,7 +62,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
             //初始化元素数组
             n = (tab = resize()).length;
         }
-        //计算index = n-1) & hash，如果没有值，直接添加
+        //计算index = （n-1) & hash，如果没有值，直接添加【* 因为数组长度是2幂次，所以hash &（n-1) = hash % n， &效率更快】
         if ((p = tab[(i = (n-1)) & hash]) == null) {
             tab[i] = new Node<>(hash, key, value, null);
         } else {
@@ -116,7 +120,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
         Node<K,V>[] oldTab = table;
         int oldCap = (oldTab == null) ? 0 : oldTab.length;
         int oldThr = threshold;
-        int newCap = 0;
+        int newCap;
         int newThr = 0;
         if (oldCap > 0) {
             //说明数组中已经存在元素
@@ -132,7 +136,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
             }
         } else if (oldThr > 0) {
             //在创建map时用的是带参的构造函数，使threshold有初始值
-            newCap = newThr;
+            newCap = oldCap;
         } else {
             //oldCap = 0 数据还未创建
             newCap = DEFAULT_INITIAL_CAPACITY;
@@ -142,10 +146,73 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
             //1 当oldCap > 0 ，数组中已经存在元素，但长度<16
             //2 oldThr > 0；newCap = newThr; 第一次put
             float ft = (float)newCap * loadFactor;
-
-            /////
+            newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY) ?
+                    (int)ft : Integer.MAX_VALUE;
         }
-        Node<K,V>[] newTab = new Node[0];
+        threshold = newThr;
+        //创建新的节点数据，长度是扩容后新的长度
+        Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+        table = newTab;
+        if (oldTab != null) {
+            //遍历扩容前的原先数组，将元素迁移到新的数组上
+            for (int j = 0; j < oldCap; j++) {
+                Node<K,V> e;
+                //原先数据上的元素赋值给e，判断当前是不是空，空的话，索引后移，一次遍历
+                if ((e = oldTab[j]) != null) {
+                    //原先数组元素置空
+                    oldTab[j] = null;
+                    //判断下个节点是不是空
+                    if (e.next == null) {
+                        //空，直接迁移到新的数组，计算新index=hash&(newCap-1)
+                        newTab[e.hash & (newCap - 1)] = e;
+                    } else if (e instanceof javax.swing.tree.TreeNode) {
+                        //不是空，元素是TreeNode
+                        ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+                    } else {
+                        //不是空，元素是链
+                        //低位数组
+                        Node<K,V> lowHead = null;
+                        Node<K,V> lowTail = null;
+                        //高位数组
+                        Node<K,V> highHead = null;
+                        Node<K,V> highTail = null;
+
+                        Node<K,V> next;
+                        do {
+                            next = e.next;
+                            if ((e.hash & oldCap) == 0) {
+                                //说明元素在原始数组和新数组的index位置相同,在low链上即可
+                                if (lowTail == null) {
+                                    //链表没有元素
+                                    lowHead = e;
+                                } else {
+                                    //链表有元素，放在下一个节点
+                                    lowTail.next = e;
+                                }
+                                //当前元素e设为尾节点
+                                lowTail = e;
+                            } else {
+                                //说明元素hash>原始数组长度,在high链上，index = 旧index + 旧数组长度【*也是因为数组长度是2幂次，才会这样】
+                                if (highTail == null) {
+                                    highHead = e;
+                                } else {
+                                    highTail.next = e;
+                                }
+                                highTail = e;
+                            }
+                        } while ((e = next) != null);
+                        if (lowTail != null) {
+                            lowTail.next = null;
+                            newTab[j] = lowHead;
+                        }
+                        if (highTail != null) {
+                            highTail.next = null;
+                            newTab[j + oldCap] = highHead;
+                        }
+                    }
+                }
+            }
+        }
         return newTab;
     }
 
@@ -235,5 +302,11 @@ public class HashMap<K, V> extends AbstractMap<K, V> {
                                        int h, K k, V v) {
             return null;
         }
+
+        final void split(HashMap<K,V> map, Node<K,V>[] tab, int index, int bit) {
+
+        }
+
+
     }
 }
