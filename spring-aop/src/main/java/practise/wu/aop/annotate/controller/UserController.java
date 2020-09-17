@@ -1,9 +1,9 @@
-package practise.wu.controller;
+package practise.wu.aop.annotate.controller;
 
-import practise.wu.model.RespHead;
-import practise.wu.model.Result;
-import practise.wu.model.User;
-import practise.wu.service.UserService;
+import practise.wu.aop.annotate.model.RespHead;
+import practise.wu.aop.annotate.model.Result;
+import practise.wu.aop.annotate.model.User;
+import practise.wu.aop.annotate.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

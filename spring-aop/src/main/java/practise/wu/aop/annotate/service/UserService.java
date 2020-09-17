@@ -1,7 +1,7 @@
-package practise.wu.service;
+package practise.wu.aop.annotate.service;
 
-import practise.wu.model.Order;
-import practise.wu.model.User;
+import practise.wu.aop.annotate.model.Order;
+import practise.wu.aop.annotate.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

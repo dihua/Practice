@@ -1,4 +1,4 @@
-package practise.wu.aspect;
+package practise.wu.aop.annotate.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,7 +19,7 @@ public class MethodAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodAspect.class);
 
-    @Pointcut("execution(* practise.wu.controller.*.*(..))")
+    @Pointcut("execution(* practise.wu.aop.annotate.controller.*.*(..))")
     private void methodPointCut () {
 
     }

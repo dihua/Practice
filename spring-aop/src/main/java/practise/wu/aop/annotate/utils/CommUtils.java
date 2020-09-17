@@ -1,4 +1,4 @@
-package practise.wu.utils;
+package practise.wu.aop.annotate.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

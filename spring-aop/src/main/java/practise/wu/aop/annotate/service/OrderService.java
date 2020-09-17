@@ -1,7 +1,7 @@
-package practise.wu.service;
+package practise.wu.aop.annotate.service;
 
-import practise.wu.model.Order;
-import practise.wu.utils.CommUtils;
+import practise.wu.aop.annotate.model.Order;
+import practise.wu.aop.annotate.utils.CommUtils;
 import org.springframework.stereotype.Service;
 
 /**

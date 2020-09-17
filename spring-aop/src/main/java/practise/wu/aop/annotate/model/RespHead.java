@@ -1,4 +1,4 @@
-package practise.wu.model;
+package practise.wu.aop.annotate.model;
 
 /**
  * @author dihua.wu
