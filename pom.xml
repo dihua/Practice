@@ -12,6 +12,7 @@
         <module>spring-aop</module>
         <module>spring-boot</module>
         <module>git</module>
+        <module>microservices</module>
     </modules>
 
 
