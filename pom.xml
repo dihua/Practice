@@ -13,6 +13,8 @@
         <module>spring-boot</module>
         <module>git</module>
         <module>microservices</module>
+        <module>untitled</module>
+        <module>thread</module>
     </modules>
 
 
