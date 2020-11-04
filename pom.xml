@@ -15,6 +15,7 @@
         <module>microservices</module>
         <module>untitled</module>
         <module>thread</module>
+        <module>spring</module>
     </modules>
 
 
