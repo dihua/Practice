@@ -152,3 +152,10 @@ beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(this));
 ```
 
+简单来说，有以下几个主要操作：
+
+1. 根据 web.xml 中 contextConfigLocation 配置的路径，读取 Spring 配置文件，并封装成 Resource。
+2. 根据 Resource 加载 XML 配置文件，并解析成 Document 对象 。
+3. 拿到 Document 中的根节点，遍历根节点和所有子节点。
+4. 根据命名空间，进行不同的解析，将 bean 节点内容解析成 BeanDefinition。
+5. 将 BeanDefinition 注册到注册表中（也就是beanDefinitionMap、beanDefinitionNames、aliasMap缓存）。
