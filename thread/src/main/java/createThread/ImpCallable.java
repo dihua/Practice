@@ -14,7 +14,9 @@ public class ImpCallable implements Callable<String> {
 
     /**
      * 注意：
-     *     call() 是由返回值的
+     *     1.call() 是由返回值的
+     *     2.Callable 是泛型
+     *     3.call() 方法是可以抛出异常的，一般的run() 方法是不行的d
      * @return
      * @throws Exception
      */
@@ -34,6 +36,8 @@ public class ImpCallable implements Callable<String> {
 
         try {
             Thread.sleep(1000);
+            //注：Callalbe接口支持返回执行结果，需要调用FutureTask.get()得到，
+            // 此方法会阻塞主进程的继续往下执行，如果不调用不会阻塞。
             System.out.println("返回结果futureTask.get()= " + futureTask.get());
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
