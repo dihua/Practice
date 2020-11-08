@@ -16,6 +16,7 @@
         <module>untitled</module>
         <module>thread</module>
         <module>spring</module>
+        <module>jvm</module>
     </modules>
 
 
