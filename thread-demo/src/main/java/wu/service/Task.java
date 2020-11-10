@@ -16,12 +16,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class Task {
 
     @Autowired
-    private ExportReportServiceImpl service;
+    private ExportReportService service;
 
     //3.添加定时任务
-    @Scheduled(cron = "0/1 * * * * ?")
-    //或直接指定时间间隔，例如：5秒
-    //@Scheduled(fixedRate=5000)
+//    @Scheduled(cron = "0/1 * * * * ?")
+//    或直接指定时间间隔，例如：5秒
+    @Scheduled(fixedRate=1000)
     private void configureTasks() {
         System.out.println("任务启动");
         service.run();

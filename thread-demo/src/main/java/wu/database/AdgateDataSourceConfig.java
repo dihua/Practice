@@ -27,8 +27,6 @@ public class AdgateDataSourceConfig extends BaseDataSourceConfig{
     private String url;
     @Value("${ats_gate.orcl.driver}")
     private String driver;
-    @Value("${database.type}")
-    private String databaseType;
 
     @Bean(name = "adgateDataSource")
     public DataSource adgateDataSource() {

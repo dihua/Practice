@@ -8,7 +8,6 @@
 //import wu.dao.IDgateDocumentInfoDao;
 //import wu.entity.DgateDocumentInfo;
 //
-//import javax.annotation.Resource;
 //import java.util.List;
 //import java.util.concurrent.Callable;
 //
@@ -17,16 +16,18 @@
 // * @description
 // * @create 2020/11/9
 // */
+//
 //public class DocThread implements Callable<Boolean> {
 //
-//    private static final Logger LOGGER = LoggerFactory.getLogger(DocThread.class);
+//    private final Logger LOGGER = LoggerFactory.getLogger(DocThread.class);
 //
-//    @Resource
+//    @Autowired
 //    private IDgateDocumentInfoDao dgateDocumentInfoDao;
 //
 //    private String exportStatus;
 //    private int start;
 //    private int end;
+//
 //
 //    public DocThread(String exportStatus, int start, int end) {
 //        this.exportStatus = exportStatus;
@@ -38,6 +39,7 @@
 //    public Boolean call() throws Exception {
 //        LOGGER.info("分页查询表dgateDocumentInfo start = {}, end = {}", start, end);
 //        List<DgateDocumentInfo> documentInfos = dgateDocumentInfoDao.queryForSend(exportStatus, start, end);
+//        Thread.sleep(5000);
 //        if (CollectionUtils.isEmpty(documentInfos)) {
 //            LOGGER.info("网关库查询不到需要处理的数据");
 //            return false;

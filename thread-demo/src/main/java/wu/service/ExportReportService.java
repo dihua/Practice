@@ -4,6 +4,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Component;
 import wu.dao.IDgateDocumentInfoDao;
 import wu.entity.DgateDocumentInfo;
 import org.slf4j.Logger;
@@ -23,11 +24,10 @@ import java.util.concurrent.*;
  * @author -
  * @date 2017/7/12
  */
-@Configuration      //1.主要用于标记配置类，兼备Component的效果。
-@EnableScheduling   // 2.开启定时任务
-public class ExportReportServiceImpl {
+@Component
+public class ExportReportService {
 
-    private static final Logger log = LoggerFactory.getLogger(ExportReportServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ExportReportService.class);
 
 
     @Autowired
@@ -36,24 +36,24 @@ public class ExportReportServiceImpl {
 //    public static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
 
     public static final ThreadPoolExecutor executorService =
-            new ThreadPoolExecutor(5, 5,
+                new ThreadPoolExecutor(5, 10,
                     30L, TimeUnit.SECONDS,
                     new LinkedBlockingQueue<Runnable>(2),
                     new ThreadPoolExecutor.CallerRunsPolicy());
 
     public void run() {
-        for (int i = 1; i < 1000; i++) {
+        for (int i = 1; i < 10; i++) {
             DocThread docThread = new DocThread("X0", i, i*10);
             Future<Boolean> future = executorService.submit(docThread);
 
-            try {
-//                Thread.sleep(5000);
-                if (future.get()) {
-                    executorService.shutdown();
-                }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                //Thread.sleep(5000);
+//                if (!future.get()) {
+//                    fixedThreadPool.shutdown();
+//                }
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -75,16 +75,18 @@ public class ExportReportServiceImpl {
 
         @Override
         public Boolean call() throws Exception {
-            LOGGER.info("分页查询表dgateDocumentInfo start = {}, end = {}", start, end);
+            LOGGER.info("{} ---------- 启动", Thread.currentThread().getName());
+//            LOGGER.info("分页查询表dgateDocumentInfo start = {}, end = {}", start, end);
             List<DgateDocumentInfo> documentInfos = dgateDocumentInfoDao.queryForSend(exportStatus, start, end);
-            Thread.sleep(5000);
+            Thread.sleep(1500);
             if (CollectionUtils.isEmpty(documentInfos)) {
                 LOGGER.info("网关库查询不到需要处理的数据");
                 return false;
             }
-            for (DgateDocumentInfo doc : documentInfos) {
-                LOGGER.info("正在处理 pk = {}", doc.getPk());
-            }
+//            for (DgateDocumentInfo doc : documentInfos) {
+//                LOGGER.info("正在处理 pk = {}", doc.getPk());
+//            }
+            LOGGER.info("{} ---------- 结束", Thread.currentThread().getName());
             return true;
         }
     }

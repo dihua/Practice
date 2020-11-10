@@ -35,7 +35,7 @@ public class BaseDataSourceConfig {
         final SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(locationPattern));
-        sqlSessionFactory.setPlugins(new Interceptor[]{new MybatisInterceptor()});
+//        sqlSessionFactory.setPlugins(new Interceptor[]{new MybatisInterceptor()});
         return sqlSessionFactory.getObject();
     }
 
