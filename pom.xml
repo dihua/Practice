@@ -13,10 +13,10 @@
         <module>spring-boot</module>
         <module>git</module>
         <module>microservices</module>
-        <module>untitled</module>
         <module>thread</module>
         <module>spring</module>
         <module>jvm</module>
+        <module>thread-demo</module>
     </modules>
 
 

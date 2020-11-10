@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="wu.dao.IDgateDocumentInfoDao">
+    <resultMap id="BaseResultMap" type="wu.entity.DgateDocumentInfo">
+        <id column="PK" property="pk" jdbcType="VARCHAR"/>
+        <result column="DOCUMENT_UNIQUE_ID" property="documentUniqueId" jdbcType="VARCHAR"/>
+        <result column="DOCUMENT_DOMAIN_ID" property="documentDomainId" jdbcType="VARCHAR"/>
+        <result column="PATIENT_ID" property="patientId" jdbcType="VARCHAR"/>
+        <result column="PATIENT_DOMAIN_ID" property="patientDomainId" jdbcType="VARCHAR"/>
+        <result column="FILE_TYPE" property="fileType" jdbcType="VARCHAR"/>
+        <result column="PAY_LOAD_TYPE" property="payLoadType" jdbcType="VARCHAR"/>
+        <result column="SUB_TYPE" property="subType" jdbcType="VARCHAR"/>
+        <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP"/>
+        <result column="EFFECTIVE_TIME" property="effectiveTime" jdbcType="TIMESTAMP"/>
+        <result column="HIUP_STATUS" property="hiupStatus" jdbcType="VARCHAR"/>
+        <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP"/>
+        <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR"/>
+        <result column="ENTRY_UUID" property="entryUuid" jdbcType="VARCHAR"/>
+        <result column="RETRY" property="retry" jdbcType="DECIMAL"/>
+        <result column="RETRY_TIME" property="retryTime" jdbcType="TIMESTAMP"/>
+        <result column="GLOBAL_ID" property="globalId" jdbcType="VARCHAR"/>
+        <result column="FILE_SYSTEM_FK" property="fileSystemFk" jdbcType="DECIMAL"/>
+        <result column="HIUP_ERROR_INFO" property="hiupErrorInfo" jdbcType="VARCHAR"/>
+        <result column="CDA_UNIQUE_ID" property="cdaUniqueId" jdbcType="VARCHAR"/>
+        <result column="REQUEST_NUMBER" property="requestNumber" jdbcType="VARCHAR"/>
+        <result column="ORDER_NUMBER" property="orderNumber" jdbcType="VARCHAR"/>
+        <result column="REPOSITORY_UNIQUE_ID" property="repositoryUniqueId" jdbcType="VARCHAR"/>
+        <result column="REQUEST_DOMAIN" property="requestDomain" jdbcType="VARCHAR"/>
+        <result column="ORDER_DOMAIN" property="orderDomain" jdbcType="VARCHAR"/>
+        <result column="BEFORE_STATUS" property="beforeStatus" jdbcType="VARCHAR"/>
+        <result column="BEFORE_RETRY_TIME" property="beforeRetryTime" jdbcType="TIMESTAMP"/>
+        <result column="BEFORE_RETRY" property="beforeRetry" jdbcType="DECIMAL"/>
+        <result column="PATIENT_TYPE" property="patientType" jdbcType="VARCHAR"/>
+        <result column="CUSTOM1" property="custom1" jdbcType="VARCHAR"/>
+        <result column="CUSTOM2" property="custom2" jdbcType="VARCHAR"/>
+        <result column="CUSTOM3" property="custom3" jdbcType="VARCHAR"/>
+        <result column="CUSTOM4" property="custom4" jdbcType="VARCHAR"/>
+        <result column="CUSTOM5" property="custom5" jdbcType="VARCHAR"/>
+        <result column="AFTER_STATUS" property="afterStatus" jdbcType="VARCHAR"/>
+        <result column="AFTER_RETRY_TIME" property="afterRetryTime" jdbcType="TIMESTAMP"/>
+        <result column="AFTER_RETRY" property="afterRetry" jdbcType="DECIMAL"/>
+        <result column="EXPORT_STATUS" property="exportStatus" jdbcType="VARCHAR"/>
+        <result column="EXPORT_RETRY_TIME" property="exportRetryTime" jdbcType="TIMESTAMP"/>
+        <result column="EXPORT_RETRY" property="exportRetry" jdbcType="DECIMAL"/>
+        <result column="PAT_CATEGORY" property="patCategory" jdbcType="VARCHAR"/>
+        <result column="PAT_CATEGORY_SYSTEM" property="patCategorySystem" jdbcType="VARCHAR"/>
+        <result column="PAT_NAME" property="patName" jdbcType="VARCHAR"/>
+        <result column="TPOS_PATH" property="tposPath" jdbcType="VARCHAR"/>
+        <result column="CLOB_STATUS" property="clobStatus" jdbcType="VARCHAR"/>
+        <result column="CLOB_RETRY_TIME" property="clobRetryTime" jdbcType="TIMESTAMP"/>
+        <result column="CLOB_RETRY" property="clobRetry" jdbcType="DECIMAL"/>
+        <result column="ASSIGNED_PERSON" property="assignedPerson" jdbcType="VARCHAR"/>
+        <result column="DOC_NAME" property="docName" jdbcType="VARCHAR"/>
+        <result column="ADMIT_TIME" property="admitTime" jdbcType="TIMESTAMP"/>
+        <result column="HIS_TYPE" property="hisType" jdbcType="VARCHAR"/>
+        <result column="BED_NO" property="bedNo" jdbcType="VARCHAR"/>
+        <result column="ASSIGNED_CODE" property="assignedCode" jdbcType="VARCHAR"/>
+        <result column="AUTHOR_CODE" property="authorCode" jdbcType="VARCHAR"/>
+        <result column="AUTHOR_NAME" property="authorName" jdbcType="VARCHAR"/>
+        <result column="MODALITY" property="modality" jdbcType="VARCHAR"/>
+        <result column="ACCESSIONNUM" property="accessionnum" jdbcType="VARCHAR"/>
+        <result column="STUDY_UID" property="studyUid" jdbcType="TIMESTAMP"/>
+        <result column="BODY_PART" property="bodyPart" jdbcType="DECIMAL"/>
+        <result column="DIAGNOSIS_METHOD_CODE" property="diagnosisMethodCode" jdbcType="VARCHAR"/>
+        <result column="DICOM_NUM" property="dicomNum" jdbcType="VARCHAR"/>
+        <result column="DICOM_STUDY_TIME" property="dicomStudyTime" jdbcType="TIMESTAMP"/>
+        <result column="REPEAT_NUMBER" property="repeatNumber" jdbcType="DECIMAL"/>
+        <result column="MACHINE_ROOM_NAME" property="machineRoomName" jdbcType="VARCHAR"/>
+        <result column="DEVICE_NAME" property="deviceName" jdbcType="VARCHAR"/>
+        <result column="RETRIEVE_AETS" property="retrieveAets" jdbcType="VARCHAR"/>
+
+        <result column="ES_STATUS" property="esStatus" jdbcType="VARCHAR"/>
+        <result column="ES_TIME" property="esTime" jdbcType="TIMESTAMP"/>
+        <result column="ES_ERROR_INFO" property="esErrorInfo" jdbcType="VARCHAR"/>
+
+        <result column="SEND_STATUS" property="sendStatus" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="queryForSend" resultMap="BaseResultMap">
+        select *
+            from (
+                select a.*,rownum as rowno
+                    from (  select *
+                            from DGATE_DOCUMENT_INFO
+                            where export_status = #{exportStatus}
+                            order by pk
+                    ) a
+                where rownum <![CDATA[< ]]> #{end}
+            ) b
+        where b.rowno >= #{start}
+
+    </select>
+
+
+
+    <update id="updateForSend" parameterType="java.util.List">
+        <if test="list != null and list.size() > 0">
+            begin
+            <foreach collection="list" item="item" index="index" separator=";">
+                update DGATE_DOCUMENT_INFO d
+                set d.EXPORT_STATUS = 'X10'
+                where d.PK = #{item.pk,jdbcType=VARCHAR}
+            </foreach>
+            ;end;
+        </if>
+        <if test="list==null or list.size()==0">
+            select sysdate from dual
+        </if>
+    </update>
+
+
+
+
+</mapper>
