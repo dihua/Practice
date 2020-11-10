@@ -11,6 +11,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/ats/framework/framework-base/1.0.3/framework-base-1.0.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-servlet-api:8.5.57" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-catalina:8.5.57" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-jsp-api:8.5.57" level="project" />
@@ -23,14 +32,5 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-util:8.5.57" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-util-scan:8.5.57" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-jaspic-api:8.5.57" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/com/ats/framework/framework-base/1.0.3/framework-base-1.0.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
   </component>
 </module>
