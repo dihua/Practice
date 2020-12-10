@@ -29,6 +29,8 @@ public class demo0 {
                     try {
                         lockObject.notify();
                         lockObject.wait();
+                        //wait 会释放锁，该线程会进入等待队列
+                        //因此不能先wait后notify，notify是持有锁的前提下通知其他线程
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
