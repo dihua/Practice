@@ -1,13 +1,11 @@
-package demo.print1A2B3C4D;
-
-import java.util.concurrent.CountDownLatch;
+package wait.printA1B2C3D4;
 
 /**
  * @author dihua.wu
  * @description
  * @create 2020/12/9
  */
-public class demo2 {
+public class Demo3_WaitNotify {
 
     /**
      * 输出：1A2B3C4D5E6F7G
@@ -31,7 +29,7 @@ public class demo2 {
         new Thread(() -> {
 
             synchronized (lockObject) {
-                while (!flag) {
+                while (!flag) {//一开始flag=false，!=flag=true，先释放锁，给thread2
                     try {
                         lockObject.wait();
                     } catch (InterruptedException e) {
@@ -39,7 +37,7 @@ public class demo2 {
                     }
                 }
                 for (char c : number) {
-                    System.out.print(c);
+                    System.out.println(c);
 
                     try {
                         lockObject.notify();
@@ -54,10 +52,12 @@ public class demo2 {
         }, "thread1").start();
 
         new Thread(() -> {
-            synchronized (lockObject) {
+            synchronized (lockObject) { //由于thread1先释放锁，thread2会拿到锁
+                flag = true;//修改flag，让thread1拿到锁，可以输出
+                System.out.println("flag = true;");
                 for (char c : letter) {
-                    System.out.print(c);
-                    flag = true;
+                    System.out.println(c);
+
                     try {
                         lockObject.notify();
                         lockObject.wait();

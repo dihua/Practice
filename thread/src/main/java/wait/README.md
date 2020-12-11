@@ -3,11 +3,11 @@
 基于对象object的monitor锁，而非线程 
 
 调用前提：
-    调用对象object.wait()/notify()/noyifyAll() 必须当前线程持有对象的monitor（锁），
+    调用对象object.wait()/notify()/noyifyAll() 当前必须线程持有对象的monitor（锁），
     所以必须在同步块/方法中进行（synchronized块或者synchronized方法）
 
 
-1.wait会释放锁
+1.wait()会释放锁
 【对比：sleep不会释放对象锁，只是让当前线程暂停执行一段时间，从而让其他线程有机会继续执行】
 
 2.调用对象object.wait()后会将线程放入waitset队列中等待（waitset 双向循环链表）.线程状态由Running变为waiting

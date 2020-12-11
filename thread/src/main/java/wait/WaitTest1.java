@@ -1,4 +1,4 @@
-package demo.wait;
+package wait;
 
 /**
  * @author dihua.wu
@@ -33,9 +33,9 @@ public class WaitTest1 {
      * start
      * Exception in thread "Thread-0" java.lang.IllegalMonitorStateException
      * 	at java.lang.Object.wait(Native Method)
-     * 	at demo.wait.WaitTest.testWait(WaitTest.java:24)
-     * 	at demo.wait.WaitTest.access$000(WaitTest.java:8)
-     * 	at demo.wait.WaitTest$1.run(WaitTest.java:16)
+     * 	at wait.WaitTest.testWait(WaitTest.java:24)
+     * 	at wait.WaitTest.access$000(WaitTest.java:8)
+     * 	at wait.WaitTest$1.run(WaitTest.java:16)
      */
 
 
@@ -52,5 +52,7 @@ public class WaitTest1 {
      *
      * wait方法是一个本地方法，其底层是通过一个叫做监视器锁的对象来完成的。
      * 所以上面之所以会抛出异常，是因为在调用wait方式时没有获取到monitor对象的所有权，
+     *
+     * wait方法的使用必须在同步的范围内
      */
 }

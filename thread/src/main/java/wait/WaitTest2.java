@@ -1,4 +1,4 @@
-package demo.wait;
+package wait;
 
 /**
  * @author dihua.wu
@@ -33,9 +33,9 @@ public class WaitTest2 {
      * start
      * Exception in thread "Thread-0" java.lang.IllegalMonitorStateException
      * 	at java.lang.Object.wait(Native Method)
-     * 	at demo.wait.WaitTest.testWait(WaitTest.java:24)
-     * 	at demo.wait.WaitTest.access$000(WaitTest.java:8)
-     * 	at demo.wait.WaitTest$1.run(WaitTest.java:16)
+     * 	at wait.WaitTest.testWait(WaitTest.java:24)
+     * 	at wait.WaitTest.access$000(WaitTest.java:8)
+     * 	at wait.WaitTest$1.run(WaitTest.java:16)
      */
 
 
